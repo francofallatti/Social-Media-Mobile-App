@@ -35,5 +35,9 @@ const style = StyleSheet.create({
     fontWeight: '600',
     color: '#FFFFFF',
   },
+  userStoryContairner: {
+    paddingHorizontal: 28,
+    marginTop: 12,
+  },
 });
 export default style;
