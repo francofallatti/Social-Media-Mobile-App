@@ -21,7 +21,7 @@ const UserStory = props => {
   );
 };
 
-UserStory.prototype = {
+UserStory.proptype = {
   firstName: PropsTypes.string.isRequired,
 };
 export default UserStory;
