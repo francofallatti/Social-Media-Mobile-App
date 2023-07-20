@@ -19,7 +19,7 @@ const style = StyleSheet.create({
     width: 10,
     height: 10,
     backgroundColor: '#F35BAC',
-    borderRadius: 100,
+    borderRadius: 10,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -42,8 +42,8 @@ const style = StyleSheet.create({
   },
   userPostContainer: {
     marginTop: 30,
-    height: '100%',
     paddingHorizontal: 24,
   },
 });
+
 export default style;
