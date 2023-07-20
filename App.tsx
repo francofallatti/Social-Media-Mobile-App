@@ -13,6 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import style from './assets/styles/main';
 import UserStory from './components/UserStory/UserStory';
+import UserPost from './components/UserPost/UserPost';
 
 const App = () => {
   //All of the items in our stories
@@ -54,18 +55,101 @@ const App = () => {
       firstName: 'Leopold',
     },
   ];
+  const posts = [
+    {
+      id: 1,
+      firstName: 'Cande',
+      lastName: 'Gonzalez',
+      location: 'Nogues, Malvinas Argentinas',
+      likes: 1323,
+      comments: 3,
+      bookmarks: 1,
+    },
+    {
+      id: 2,
+      firstName: 'Fran',
+      lastName: 'Fallatti',
+      location: 'Paris, Francia',
+      likes: 1313,
+      comments: 2,
+      bookmarks: 3,
+    },
+    {
+      id: 3,
+      firstName: 'Venus',
+      lastName: 'Gonzalez',
+      location: 'Nogues, Malvinas Argentinas',
+      likes: 12323,
+      comments: 5,
+      bookmarks: 4,
+    },
+    {
+      id: 4,
+      firstName: 'Milo',
+      lastName: 'Fallatti',
+      location: 'Los polvorines',
+      likes: 123,
+      comments: 1,
+      bookmarks: 10,
+    },
+    {
+      id: 5,
+      firstName: 'Mili',
+      lastName: 'Gonzalez',
+      location: 'Nogues, Malvinas Argentinas',
+      likes: 132,
+      comments: 0,
+      bookmarks: 2,
+    },
+    {
+      id: 6,
+      firstName: 'Pluto',
+      lastName: 'Miño',
+      location: 'Wilde',
+      likes: 13,
+      comments: 0,
+      bookmarks: 30,
+    },
+    {
+      id: 7,
+      firstName: 'Chimuel',
+      lastName: 'Miño',
+      location: 'Wilde',
+      likes: 1233,
+      comments: 4,
+      bookmarks: 10,
+    },
+    {
+      id: 8,
+      firstName: 'Goku',
+      lastName: 'Fallatti',
+      location: '?',
+      likes: 10000,
+      comments: 7,
+      bookmarks: 100,
+    },
+  ];
   const pageSize = 4;
+  const pageSizePosts = 2;
   const [pageNumber, setPageNumber] = useState(1);
+  const [postPageNumber, setPostPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPosts, setIsLoadingPosts] = useState(false);
   const [renderedData, setRenderedData] = useState(data.slice(0, pageSize));
+  const [renderedDataPosts, setRenderedDataPosts] = useState(
+    posts.slice(0, pageSize),
+  );
 
-  const pagination = (data, pageNumber, pageSize) => {
-    let startIndex = (pageNumber - 1) * pageSize; //4
-    console.log(startIndex, renderedData.length);
-    if (startIndex > data.length) {
+  const pagination = (data, pageNumber, pageSize, posts = false) => {
+    let startIndex = (pageNumber - 1) * pageSize;
+    if (startIndex >= data.length) {
       return [];
     }
-    setPageNumber(pageNumber);
+    if (!posts) {
+      setPageNumber(pageNumber);
+    } else {
+      setPostPageNumber(pageNumber);
+    }
     return data.slice(startIndex, startIndex + pageSize);
   };
 
@@ -73,7 +157,7 @@ const App = () => {
     <SafeAreaView>
       <ScrollView>
         <View style={style.header}>
-          <Title title={"Let's Exploore"} />
+          <Title title={"Let's Explore"} />
           <Pressable style={style.messageIcon}>
             <FontAwesomeIcon icon={faEnvelope} color={'#CACDDE'} size={20} />
             <View style={style.messageNumberContainer}>
@@ -81,8 +165,9 @@ const App = () => {
             </View>
           </Pressable>
         </View>
-        <View style={style.userStoryContairner}>
+        <View style={style.userStoryContainer}>
           <FlatList
+            onMomentumScrollBegin={() => setIsLoadingPosts(false)}
             onEndReachedThreshold={0.5}
             keyExtractor={item => item.id.toString()}
             onEndReached={() => {
@@ -99,6 +184,35 @@ const App = () => {
             horizontal={true}
             data={renderedData}
             renderItem={({item}) => <UserStory firstName={item.firstName} />}
+          />
+        </View>
+        <View style={style.userPostContainer}>
+          <FlatList
+            onMomentumScrollBegin={() => setIsLoadingPosts(false)}
+            onEndReachedThreshold={0.5}
+            keyExtractor={item => item.id.toString() + 'post'}
+            onEndReached={() => {
+              if (!isLoading) {
+                setIsLoadingPosts(true);
+                setRenderedDataPosts(prev => [
+                  ...prev,
+                  ...pagination(posts, pageNumber + 1, pageSize, true),
+                ]);
+                setIsLoadingPosts(false);
+              }
+            }}
+            showsVerticalScrollIndicator={false}
+            data={renderedDataPosts}
+            renderItem={({item}) => (
+              <UserPost
+                firstName={item.firstName}
+                lastName={item.lastName}
+                comments={item.comments}
+                likes={item.likes}
+                bookmarks={item.bookmarks}
+                location={item.location}
+              />
+            )}
           />
         </View>
       </ScrollView>
