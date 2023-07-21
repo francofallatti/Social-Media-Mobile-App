@@ -1,6 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {SafeAreaView, Pressable, View, Text, FlatList} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  SafeAreaView,
+  Pressable,
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 import Title from './components/Title/Title';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
@@ -107,6 +114,16 @@ const App = () => {
   const [renderedDataPosts, setRenderedDataPosts] = useState(
     posts.slice(0, pageSizePosts),
   );
+
+  const [screenData, setScreenData] = useState(Dimensions.get('screen'));
+  console.log(screenData);
+  useEffect(() => {
+    Dimensions.addEventListener('change', result => {
+      console.log('change screen data ', result.screen);
+      setScreenData(result.screen);
+    });
+  }, []);
+
   const pagination = (data, pageNumber, pageSize, posts = false) => {
     let startIndex = (pageNumber - 1) * pageSize;
     if (startIndex >= data.length) {
@@ -134,7 +151,13 @@ const App = () => {
                   size={20}
                 />
                 <View style={style.messageNumberContainer}>
-                  <Text style={style.messageNumber}>2</Text>
+                  <Text
+                    style={[
+                      (style.messageNumber,
+                      {fontSize: screenData.height / 130}),
+                    ]}>
+                    2
+                  </Text>
                 </View>
               </Pressable>
             </View>
