@@ -14,6 +14,7 @@ import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import style from './assets/styles/main';
 import UserStory from './components/UserStory/UserStory';
 import UserPost from './components/UserPost/UserPost';
+import {scaleFontSize} from './assets/styles/scaling';
 
 const App = () => {
   //All of the items in our stories
@@ -148,16 +149,10 @@ const App = () => {
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   color={'#CACDDE'}
-                  size={20}
+                  size={scaleFontSize(20)}
                 />
                 <View style={style.messageNumberContainer}>
-                  <Text
-                    style={[
-                      (style.messageNumber,
-                      {fontSize: screenData.height / 130}),
-                    ]}>
-                    2
-                  </Text>
+                  <Text style={style.messageNumber}>2</Text>
                 </View>
               </Pressable>
             </View>
