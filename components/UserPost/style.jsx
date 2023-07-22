@@ -51,7 +51,7 @@ const style = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    mpaddingBottom: verticalScale(30),
+    paddingBottom: verticalScale(30),
     paddingHorizontal: horizontalScale(10),
   },
   userPostStatButton: {
