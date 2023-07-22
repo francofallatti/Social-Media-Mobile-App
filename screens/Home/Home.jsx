@@ -128,11 +128,7 @@ const Home = ({navigation}) => {
           <>
             <View style={style.header}>
               <Title title={"Let's Explore"} />
-              <Pressable
-                style={style.messageIcon}
-                onPress={() => {
-                  navigation.navigate(Routes.Profile);
-                }}>
+              <Pressable style={style.messageIcon}>
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   color={'#CACDDE'}
