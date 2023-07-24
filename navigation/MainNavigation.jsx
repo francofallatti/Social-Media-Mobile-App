@@ -1,21 +1,19 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from '../screens/Home/Home';
-import Profile from '../screens/Profile/Profile';
-import {Routes} from './Routes';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {View} from 'react-native';
-import {Text} from 'react-native-svg';
+import Home from '../screens/Home/Home';
+import Profile from '../screens/Profile/Profile';
 import ProfileTabTitle from '../components/ProfileTabTitle/ProfileTabTitle';
 import ProfileTabPost from '../components/ProfileTabPost/ProfileTabPost';
+import {Routes} from './Routes';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const ProfileTabs = createMaterialTopTabNavigator();
 
-const ProfileTabNavigation = () => {
+export const ProfileTabNavigation = () => {
   return (
-    <Profile.Navigator
+    <ProfileTabs.Navigator
       screenOptions={{
         tabBarIndicatorStyle: {
           backgroundColor: 'transparent',
@@ -52,13 +50,13 @@ const ProfileTabNavigation = () => {
           },
         }}
       />
-    </Profile.Navigator>
+    </ProfileTabs.Navigator>
   );
 };
 
 const MainMenuNavigation = () => {
   return (
-    <Drawer.Navigator screenOptions={{header: () => null}}>
+    <Drawer.Navigator screenOptions={{header: () => null, headerShown: false}}>
       <Drawer.Screen name={Routes.Home} component={Home} />
       <Drawer.Screen name={Routes.Profile} component={Profile} />
     </Drawer.Navigator>
