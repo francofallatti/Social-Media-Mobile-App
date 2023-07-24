@@ -1,12 +1,43 @@
 import React from 'react';
-import {SafeAreaView, View, Text} from 'react-native';
+import {Image, SafeAreaView, ScrollView, View, Text} from 'react-native';
+import globalStyle from '../../assets/styles/main';
+import style from './style';
+import {ProfileTabNavigation} from '../../navigation/MainNavigation';
 
 const Profile = () => {
   return (
-    <SafeAreaView>
-      <View>
-        <Text>This is a profile page</Text>
-      </View>
+    <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+      <ScrollView>
+        <View style={style.profileImageContainer}>
+          <View style={style.profileImageContent}>
+            <Image
+              style={style.profileImage}
+              source={require('../../assets/images/default_profile.png')}
+            />
+          </View>
+        </View>
+        <View style={style.userNameContainer}>
+          <Text style={style.userName}>Fran Fallatti</Text>
+        </View>
+        <View style={style.profileStatsContainer}>
+          <View style={[style.singleStatContainer, style.singleStatBorder]}>
+            <Text style={style.singleStatNumber}>145</Text>
+            <Text style={style.singleStatText}>Following</Text>
+          </View>
+          <View style={[style.singleStatContainer, style.singleStatBorder]}>
+            <Text style={style.singleStatNumber}>30mil</Text>
+            <Text style={style.singleStatText}>Followers</Text>
+          </View>
+          <View style={style.singleStatContainer}>
+            <Text style={style.singleStatNumber}>98</Text>
+            <Text style={style.singleStatText}>Posts</Text>
+          </View>
+        </View>
+        <View style={style.border} />
+        <View style={{height: '100%'}}>
+          <ProfileTabNavigation />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
